@@ -65,6 +65,9 @@ export default new Vuex.Store({
       state.game.turn.to = ((state.game.turn.to + 1) % state.players.length)
       state.game.turn.leftRolls = 3
     },
+    resetDices (state) {
+      state.game.turn.dices.forEach(x => x.locked = false)
+    },
     setScoreRowValue (state, { id, zone, att, value }) {
       state.players[id].scores[zone][att] = value
     },
@@ -100,6 +103,7 @@ export default new Vuex.Store({
     },
     nextTurn (context) {
       context.commit('nextTurn')
+      context.commit('resetDices')
     }
   },
   getters: {

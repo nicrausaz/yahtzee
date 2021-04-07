@@ -1,5 +1,5 @@
 <template>
-  <div class="dice" @click="toggleLock">
+  <div class="dice" :class="{'noRoll': !lockable}" @click="toggleLock">
     <v-icon class="icon" size="100" :color="locked ? 'grey' : 'blue'" :style="rotation">{{
       representation
     }}</v-icon>
@@ -14,7 +14,9 @@ export default {
   }),
   methods: {
     toggleLock () {
-      this.$store.commit('toggleDiceLock', this.$props.id)
+      if (this.lockable) {
+        this.$store.commit('toggleDiceLock', this.$props.id)
+      }
     },
     async animate () {
       if (!this.locked) {
@@ -31,16 +33,20 @@ export default {
     },
     rotation () {
       return `transform: rotate(${ this.rotate }deg); transition: transform 1s;`
+    },
+    lockable () {
+      return this.$store.state.game.turn.leftRolls < 3 && this.$store.state.game.turn.leftRolls
     }
   }
 }
 </script>
 
 <style scoped>
-.spin-enter-active, .spin-leave-active {
-  transform:rotate(0deg);
+.dice:hover {
+  cursor: pointer;
 }
-.spin-enter, .spin-leave-to {
-  transform:rotate(360deg);
+
+.noRoll:hover {
+  cursor: not-allowed !important;
 }
 </style>

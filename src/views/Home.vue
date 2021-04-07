@@ -2,21 +2,34 @@
   <div class="home">
     <v-card class="mx-auto" max-width="800">
       <v-img
-        src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+        src="@/assets/dices.jpg"
         height="200px"
       ></v-img>
 
-      <v-card-title>Let's play</v-card-title>
+      <v-card-text class="text--primary">
+        <RulesText />
+      </v-card-text>
 
-      <v-card-actions>
-        <v-btn color="primary" @click="openPlayersDialog = true">Jouer</v-btn>
-      </v-card-actions>
+      <v-list class="transparent">
+        <v-list-item>
+          <v-btn color="green darken-4" @click="openPlayersDialog = true" block dark
+            >Jouer hors ligne</v-btn
+          >
+        </v-list-item>
+        <v-list-item>
+          <v-btn color="green darken-4" block dark>Jouer en ligne</v-btn>
+        </v-list-item>
+      </v-list>
     </v-card>
-    <PlayersDialog :open="openPlayersDialog" @close="openPlayersDialog = false"/>
+    <PlayersDialog
+      :open="openPlayersDialog"
+      @close="openPlayersDialog = false"
+    />
   </div>
 </template>
 
 <script>
+import RulesText from "@/components/RulesText.vue"
 import PlayersDialog from "@/components/PlayersDialog.vue"
 
 export default {
@@ -25,7 +38,8 @@ export default {
     openPlayersDialog: false
   }),
   components: {
-    PlayersDialog
+    PlayersDialog,
+    RulesText
   }
 }
 </script>

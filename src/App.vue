@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app dense color="green" >
+    <v-app-bar app dense color="green darken-4" dark>
       <v-icon>mdi-dice-1</v-icon>
       <v-toolbar-title>Yahtzee</v-toolbar-title>
     </v-app-bar>
@@ -16,10 +16,6 @@
 <script>
 
 export default {
-  name: 'App',
-
-  data: () => ({
-    //
-  }),
+  name: 'App'
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="playboard">
-    <v-card id="board" color="green darken-4" elevation="2" height="500">
+    <v-card id="board" color="green darken-4" elevation="2" height="500" dark>
     </v-card>
     <v-card id="dices">
       <v-card-title>Au tour de: {{ $store.getters.currentTurnPlayerName }}</v-card-title>
@@ -10,8 +10,10 @@
       </div>
       <v-divider></v-divider>
 
-      <v-btn block @click="roll" :disabled="!canRool"
-        >Lancer ({{ $store.state.game.turn.leftRolls }} restants)
+      <v-btn block @click="roll" :disabled="!canRool">
+        <span v-if="$store.state.game.turn.leftRolls">Lancer ({{ $store.state.game.turn.leftRolls }} restants)</span>
+        <span v-else>Choisir</span>
+        
       </v-btn>
     </v-card>
   </div>

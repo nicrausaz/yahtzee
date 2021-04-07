@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col cols="12" sm="5">
-        <v-sheet rounded="lg" min-height="268"><ScoreCard /></v-sheet>
+        <v-sheet rounded="lg"><ScoreCard /></v-sheet>
       </v-col>
 
       <v-col cols="12" sm="7">

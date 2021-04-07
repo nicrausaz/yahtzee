@@ -27,8 +27,7 @@ export default class Scorer {
          switch (att) {
             case 'pair':
                req = this.hasRequiredCount(occ, 2)
-               // TODO: get biggest pair
-               return req.length > 0 ? this.valueFromKey(req[0].key) * 2 : 0
+               return req.length > 0 ? this.valueFromKey(req[req.length-1].key) * 2 : 0
 
             case 'twopair':
                req = this.hasRequiredCount(occ, 2)
