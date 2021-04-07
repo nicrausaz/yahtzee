@@ -75,7 +75,6 @@
                 :id="p.id"
                 @added="incr"
               />
-              {{ p.scores.upper.sixes }}
             </th>
           </tr>
           <tr>

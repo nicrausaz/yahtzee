@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Scorer from './Scorer'
 
 Vue.use(Vuex)
 
@@ -62,9 +63,18 @@ export default new Vuex.Store({
     },
     nextTurn (state) {
       state.game.turn.to = ((state.game.turn.to + 1) % state.players.length)
+      state.game.turn.leftRolls = 3
     },
     setScoreRowValue (state, { id, zone, att, value }) {
       state.players[id].scores[zone][att] = value
+    },
+    refreshTotals (state, id) {
+      state.players[id].scores.totals.upper_total = Object.values(state.players[id].scores.upper).reduce((a, b) => a + b)
+      state.players[id].scores.totals.lower_total = Object.values(state.players[id].scores.lower).reduce((a, b) => a + b)
+
+      if (state.players[id].scores.totals.upper_total >= 63) {
+        state.players[id].scores.totals.upper_total = 50
+      }
     }
   },
   actions: {
@@ -82,21 +92,11 @@ export default new Vuex.Store({
     },
     editScore (context, { id, zone, att }) {
 
-      // TODO: Apply score
-      if (zone === 'upper') {
-        switch (att) {
-          case 'ones':
-            console.log(this.state.game.turn.dices.filter(x => x.value === 1).length)
-            context.commit('setScoreRowValue', { id, zone, att, value: this.state.game.turn.dices.filter(x => x.value === 1).length })
-            break
-        }
-      }
-      else if (zone === 'lower') {
-        //
-      }
-      else throw Error('Invalid score zone')
+      let result = Scorer.evaluate(zone, att, this.state.game.turn.dices)
 
-      // TODO: Update global scores
+      context.commit('setScoreRowValue', { id, zone, att, value: result })
+
+      context.commit('refreshTotals', id)
     },
     nextTurn (context) {
       context.commit('nextTurn')
