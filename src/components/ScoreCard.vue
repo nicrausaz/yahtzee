@@ -1,5 +1,9 @@
 <template>
-  <div class="scoretable" :key="turn">
+  <div class="scoretable" :key="$store.getters.currentTurn">
+    <v-container>
+      <p class="text-right">Tour {{ $store.getters.currentTurn }} / 15</p>
+    </v-container>
+    <v-divider></v-divider>
     <v-simple-table dense>
       <template v-slot:default>
         <thead>
@@ -18,7 +22,6 @@
                 zone="upper"
                 att="ones"
                 :id="p.id"
-                @added="incr"
               />
             </th>
           </tr>
@@ -29,7 +32,6 @@
                 zone="upper"
                 att="twos"
                 :id="p.id"
-                @added="incr"
               />
             </th>
           </tr>
@@ -40,7 +42,6 @@
                 zone="upper"
                 att="threes"
                 :id="p.id"
-                @added="incr"
               />
             </th>
           </tr>
@@ -51,7 +52,6 @@
                 zone="upper"
                 att="fours"
                 :id="p.id"
-                @added="incr"
               />
             </th>
           </tr>
@@ -62,7 +62,6 @@
                 zone="upper"
                 att="fives"
                 :id="p.id"
-                @added="incr"
               />
             </th>
           </tr>
@@ -73,7 +72,6 @@
                 zone="upper"
                 att="sixes"
                 :id="p.id"
-                @added="incr"
               />
             </th>
           </tr>
@@ -114,95 +112,86 @@
                 zone="lower"
                 att="pair"
                 :id="p.id"
-                @added="incr"
               />
             </th>
           </tr>
           <tr>
             <td>2 paire</td>
             <th class="text-left" v-for="p in players" :key="p.id">
-               <EditableScoreRow
+              <EditableScoreRow
                 zone="lower"
                 att="twopair"
                 :id="p.id"
-                @added="incr"
               />
             </th>
           </tr>
           <tr>
             <td>Brelan</td>
             <th class="text-left" v-for="p in players" :key="p.id">
-               <EditableScoreRow
+              <EditableScoreRow
                 zone="lower"
                 att="three"
                 :id="p.id"
-                @added="incr"
               />
             </th>
           </tr>
           <tr>
             <td>Carré</td>
             <th class="text-left" v-for="p in players" :key="p.id">
-               <EditableScoreRow
+              <EditableScoreRow
                 zone="lower"
                 att="four"
                 :id="p.id"
-                @added="incr"
               />
             </th>
           </tr>
           <tr>
             <td>Full</td>
             <th class="text-left" v-for="p in players" :key="p.id">
-               <EditableScoreRow
+              <EditableScoreRow
                 zone="lower"
                 att="full"
                 :id="p.id"
-                @added="incr"
               />
             </th>
           </tr>
           <tr>
             <td>Petite suite</td>
             <th class="text-left" v-for="p in players" :key="p.id">
-               <EditableScoreRow
+              <EditableScoreRow
                 zone="lower"
                 att="serie"
                 :id="p.id"
-                @added="incr"
               />
             </th>
           </tr>
           <tr>
             <td>Grande suite</td>
             <th class="text-left" v-for="p in players" :key="p.id">
-               <EditableScoreRow
+              <EditableScoreRow
                 zone="lower"
                 att="bigserie"
                 :id="p.id"
-                @added="incr"
               />
             </th>
           </tr>
           <tr>
             <td>Yahtzee</td>
             <th class="text-left" v-for="p in players" :key="p.id">
-               <EditableScoreRow
+              <EditableScoreRow
                 zone="lower"
                 att="yahtzee"
                 :id="p.id"
-                @added="incr"
               />
             </th>
           </tr>
           <tr>
             <td>Chance</td>
             <th class="text-left" v-for="p in players" :key="p.id">
-               <EditableScoreRow
+              <EditableScoreRow
                 zone="lower"
                 att="chance"
                 :id="p.id"
-                @added="incr"
               />
             </th>
           </tr>
@@ -237,11 +226,6 @@ export default {
   computed: {
     players () {
       return this.$store.state.players
-    }
-  },
-  methods: {
-    incr () {
-      this.turn++
     }
   }
 }

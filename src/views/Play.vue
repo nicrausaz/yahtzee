@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    {{ $store.getters.gameIsOver == true}}
     <v-row>
       <v-col cols="12" sm="5">
         <v-sheet rounded="lg"><ScoreCard /></v-sheet>

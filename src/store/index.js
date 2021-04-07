@@ -10,6 +10,7 @@ export default new Vuex.Store({
     game: {
       turn: {
         to: 0,
+        number: 1,
         leftRolls: 3,
         dices: [
           { id: 1, locked: false, value: 1 },
@@ -63,6 +64,7 @@ export default new Vuex.Store({
     },
     nextTurn (state) {
       state.game.turn.to = ((state.game.turn.to + 1) % state.players.length)
+      state.game.turn.number++
       state.game.turn.leftRolls = 3
     },
     resetDices (state) {
@@ -109,6 +111,12 @@ export default new Vuex.Store({
   getters: {
     currentTurnPlayerName (state) {
       return state.players.find(x => x.id === state.game.turn.to).name
+    },
+    currentTurn (state) {
+      return Math.ceil(state.game.turn.number / state.players.length)
+    },
+    gameIsOver (state) {
+      return Math.ceil(state.game.turn.number / state.players.length) == 16
     }
   }
 })
