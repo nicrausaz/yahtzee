@@ -2,12 +2,11 @@
   <div class="playboard">
     <v-card id="board" color="green darken-4" elevation="2" height="500">
     </v-card>
-
     <v-card id="dices">
       <v-card-title>Au tour de: {{ $store.getters.currentTurnPlayerName }}</v-card-title>
       <v-divider></v-divider>
       <div class="d-flex justify-space-around">
-        <Dice v-for="dice in dices" :key="dice.id" :id="dice.id" />
+        <Dice v-for="dice in dices" :key="dice.id" :id="dice.id" ref="dices"/>
       </div>
       <v-divider></v-divider>
 
@@ -25,6 +24,7 @@ export default {
   components: { Dice },
   methods: {
     roll () {
+      this.$refs.dices.forEach(d => d.animate())
       this.$store.dispatch('rollDices')
     }
   },

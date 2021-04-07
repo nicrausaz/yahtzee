@@ -18,6 +18,10 @@ const routes = [
     path: '/play/:type',
     name: 'Play',
     component: () => import(/* webpackChunkName: "about" */ '../views/Play.vue')
+  },
+  {
+    path: "*", 
+    component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue')
   }
 ]
 

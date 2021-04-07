@@ -18,7 +18,24 @@ import PlayBoard from '@/components/PlayBoard.vue'
 
 export default {
   components: { ScoreCard, PlayBoard },
-  name: 'Play'
+  name: 'Play',
+  mounted () {
+    window.onbeforeunload = (event) => {
+      const e = event || window.event
+      e.preventDefault()
+      if (e) {
+        e.returnValue = ''
+      }
+      return ''
+    }
+
+    if (!this.$store.state.players.length) {
+      this.$router.push({ name: 'Home' })
+    }
+  },
+  unmounted () {
+    window.removeEventListener("beforeunload", null);
+  }
 }
 </script>
 
