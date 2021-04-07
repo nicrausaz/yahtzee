@@ -61,7 +61,6 @@ export default {
     async startGame () {
       if (this.players.length) {
         await this.$store.dispatch('initGame', this.players)
-
         this.$router.push('/play/local')
       }
     }

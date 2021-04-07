@@ -1,6 +1,5 @@
 <template>
   <v-container>
-    {{ $store.getters.gameIsOver == true}}
     <v-row>
       <v-col cols="12" sm="5">
         <v-sheet rounded="lg"><ScoreCard /></v-sheet>
@@ -10,15 +9,18 @@
         <v-sheet rounded="lg"><PlayBoard /> </v-sheet>
       </v-col>
     </v-row>
+
+    <EndgameDialog :open="$store.getters.gameIsOver" />
   </v-container>
 </template>
 
 <script>
 import ScoreCard from '@/components/ScoreCard.vue'
 import PlayBoard from '@/components/PlayBoard.vue'
+import EndgameDialog from '../components/EndgameDialog.vue'
 
 export default {
-  components: { ScoreCard, PlayBoard },
+  components: { ScoreCard, PlayBoard, EndgameDialog },
   name: 'Play',
   mounted () {
     window.onbeforeunload = (event) => {

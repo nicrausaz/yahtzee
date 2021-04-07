@@ -48,10 +48,40 @@ export default new Vuex.Store({
           totals: {
             upper_total: null,
             upper_bonus: null,
-            lower_total: null
+            lower_total: null,
+            total: null,
           }
         }
       }
+    },
+    resetScores (state) {
+      state.players.forEach(p => p.scores = {
+        upper: {
+          ones: null,
+          twos: null,
+          threes: null,
+          fours: null,
+          fives: null,
+          sixes: null,
+        },
+        lower: {
+          pair: null,
+          twopair: null,
+          three: null,
+          four: null,
+          full: null,
+          serie: null,
+          bigserie: null,
+          yahtzee: null,
+          chance: null,
+        },
+        totals: {
+          upper_total: null,
+          upper_bonus: null,
+          lower_total: null,
+          total: null,
+        }
+      })
     },
     toggleDiceLock (state, id) {
       state.game.turn.dices.find(x => x.id === id).locked = !state.game.turn.dices.find(x => x.id === id).locked
@@ -67,6 +97,11 @@ export default new Vuex.Store({
       state.game.turn.number++
       state.game.turn.leftRolls = 3
     },
+    resetGame (state) {
+      state.game.turn.to = 0
+      state.game.turn.number = 1
+      state.game.turn.leftRolls = 3
+    },
     resetDices (state) {
       state.game.turn.dices.forEach(x => x.locked = false)
     },
@@ -78,13 +113,20 @@ export default new Vuex.Store({
       state.players[id].scores.totals.lower_total = Object.values(state.players[id].scores.lower).reduce((a, b) => a + b)
 
       if (state.players[id].scores.totals.upper_total >= 63) {
-        state.players[id].scores.totals.upper_total = 50
+        state.players[id].scores.totals.upper_bonus = 50
       }
+
+      state.players[id].scores.totals.total = state.players[id].scores.totals.upper_total + state.players[id].scores.totals.upper_bonus + state.players[id].scores.totals.lower_total
     }
   },
   actions: {
     async initGame (context, players) {
       players.forEach(p => context.commit('createPlayer', p))
+    },
+    replay (context) {
+      context.commit('resetScores')
+      context.commit('resetGame')
+
     },
     rollDices (context) {
       context.commit('setLeftRools', this.state.game.turn.leftRolls - 1)
@@ -117,6 +159,9 @@ export default new Vuex.Store({
     },
     gameIsOver (state) {
       return Math.ceil(state.game.turn.number / state.players.length) == 16
+    },
+    playersRanking (state) {
+      return state.players.sort((a, b) => a.scores.totals.total - b.scores.totals.total)
     }
   }
 })
