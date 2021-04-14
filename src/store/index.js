@@ -67,8 +67,7 @@ export default new Vuex.Store({
   },
   actions: {
     async initGame (context, players) {
-      // TODO: Clear invalid players (empty)
-      players.forEach(p => context.commit('createPlayer', p))
+      players.forEach(p => { if (p != '') context.commit('createPlayer', p) })
 
       for (let i = 1; i <= Defaults.NB_OF_DICES; i++) {
         context.commit('createDice', i);
@@ -88,7 +87,7 @@ export default new Vuex.Store({
 
       this.state.game.turn.dices.forEach(dice => {
         if (!dice.locked) {
-          context.commit('setDiceValue', { id: dice.id, value: (Math.floor(Math.random() * Defaults.NB_OF_DICES + 1) + 1) })
+          context.commit('setDiceValue', { id: dice.id, value: (Math.floor(Math.random() * (Defaults.NB_OF_DICES + 1)) + 1) })
         }
       })
     },

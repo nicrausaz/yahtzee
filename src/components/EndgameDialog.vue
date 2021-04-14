@@ -39,6 +39,7 @@
 </template>
 
 <script>
+/* TODO: Sort by points */
 export default {
   props: ['open'],
   methods: {
