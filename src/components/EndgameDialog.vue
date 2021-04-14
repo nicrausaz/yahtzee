@@ -41,17 +41,12 @@
 <script>
 export default {
   props: ['open'],
-  data: () => ({
-
-  }),
   methods: {
     quit () {
       this.$emit('close')
-      this.$router.push({ name: 'Home' })
     },
     replay () {
       this.$store.dispatch('replay')
-      //this.$emit('close')
     }
   }
 }

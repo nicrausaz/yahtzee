@@ -1,5 +1,5 @@
 <template>
-  <div class="scoretable" :key="$store.getters.currentTurn">
+  <div class="scoretable" :key="$store.state.game.turn.number">
     <v-container>
       <p class="text-right">Tour {{ $store.getters.currentTurn }} / 15</p>
     </v-container>

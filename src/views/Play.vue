@@ -10,7 +10,7 @@
       </v-col>
     </v-row>
 
-    <EndgameDialog :open="$store.getters.gameIsOver" />
+    <EndgameDialog :open="$store.getters.gameIsOver" @close="abortGame" />
   </v-container>
 </template>
 
@@ -22,6 +22,12 @@ import EndgameDialog from '../components/EndgameDialog.vue'
 export default {
   components: { ScoreCard, PlayBoard, EndgameDialog },
   name: 'Play',
+  methods: {
+    abortGame () {
+      this.$store.dispatch('abortGame')
+      this.$router.push({ name: 'Home' })
+    }
+  },
   mounted () {
     window.onbeforeunload = (event) => {
       const e = event || window.event

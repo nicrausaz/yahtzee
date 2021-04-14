@@ -1,11 +1,10 @@
-export default class Scorer {
-   static DEFAULTS = {}
+import Defaults from './Defaults'
 
+export default class Scorer {
    static evaluate (zone, att, dices) {
 
       let req, reqThree, reqTwo
       let occ = this.occurences(dices)
-
 
       if (zone === 'upper') {
          switch (att) {
@@ -27,7 +26,7 @@ export default class Scorer {
          switch (att) {
             case 'pair':
                req = this.hasRequiredCount(occ, 2)
-               return req.length > 0 ? this.valueFromKey(req[req.length-1].key) * 2 : 0
+               return req.length > 0 ? this.valueFromKey(req[req.length - 1].key) * 2 : 0
 
             case 'twopair':
                req = this.hasRequiredCount(occ, 2)
@@ -44,17 +43,17 @@ export default class Scorer {
             case 'full':
                reqThree = this.hasRequiredCount(occ, 3)
                reqTwo = this.hasRequiredCount(occ, 2)
-               return reqThree.length == 1 && reqTwo.length == 2 ? 25 : 0
+               return reqThree.length == 1 && reqTwo.length == 2 ? Defaults.POINTS_FOR_FULL : 0
 
             case 'serie':
-               return this.isASerie(occ, false) ? 30 : 0
+               return this.isASerie(occ, false) ? Defaults.POINTS_FOR_SERIE : 0
 
             case 'bigserie':
-               return this.isASerie(occ, true) ? 40 : 0
+               return this.isASerie(occ, true) ? Defaults.POINTS_FOR_BIGSERIE : 0
 
             case 'yahtzee':
                req = this.hasRequiredCount(occ, 5)
-               return req.length > 0 ? 50 : 0
+               return req.length > 0 ? Defaults.POINTS_FOR_YAHTZEE : 0
 
             case 'chance':
                return this.sumOfDices(dices)
