@@ -6,7 +6,6 @@
       <v-card-text class="text--primary">
         <RulesText />
       </v-card-text>
-
       <v-list class="transparent">
         <v-list-item>
           <v-btn
@@ -14,11 +13,11 @@
             @click="openPlayersDialog = true"
             block
             dark
-            >Jouer hors ligne</v-btn
+            >{{ $t("home.offline") }}</v-btn
           >
         </v-list-item>
         <v-list-item>
-          <v-btn color="green darken-4" block dark>Jouer en ligne</v-btn>
+          <v-btn color="green darken-4" block dark>{{ $t("home.online") }}</v-btn>
         </v-list-item>
       </v-list>
     </v-card>

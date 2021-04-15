@@ -1,0 +1,34 @@
+{
+   "title": "Yahtzee",
+   "rules": {
+      "title": "Règles du jeu de Yahtzee",
+      "upper": "Partie mineure",
+      "lower": "Partie majeure",
+      "ones": "Partie de 1 : les joueurs doivent obtenir le plus grand nombre de dés avec la face 1 / ils marquent 1 fois le nombre de dés de valeur 1.",
+      "twos": "Partie de 2 : les joueurs doivent obtenir le plus grand nombre de dés avec la face 2 / ils marquent 2 fois le nombre de dés de valeur 2.",
+      "threes": "Partie de 3 : les joueurs doivent obtenir le plus grand nombre de dés avec la face 3 / ils marquent 1 fois le nombre de dés de valeur 3.",
+      "fours": "Partie de 4 : les joueurs doivent obtenir le plus grand nombre de dés avec la face 4 / ils marquent 4 fois le nombre de dés de valeur 4.",
+      "fives": "Partie de 5 : les joueurs doivent obtenir le plus grand nombre de dés avec la face 5 / ils marquent 5 fois le nombre de dés de valeur 5.",
+      "sixes": "Partie de 6 : les joueurs doivent obtenir le plus grand nombre de dés avec la face 6 / ils marquent 6 fois le nombre de dés de valeur 6.",
+      "bonus": "Ils obtiennent un bonus de 35 points si le total de la partie mineure est égal ou supérieur à 63 points.",
+      "pair": "1 paire: les joueurs doivent obtenir 2 dés de même valeur / ils marquent la somme des deux dès.",
+      "twopair": "2 paires: les joueurs doivent obtenir 2 paires différentes de dés de même valeur / ils marquent la somme des quatres dès.",
+      "three": "Brelan: les joueurs doivent obtenir 3 dés de même valeur / ils marquent la somme de tous les dès.",
+      "four": "Carré : les joueurs doivent obtenir 4 dés de même valeur / ils marquent la somme de tous les dès.",
+      "full": "Full : les joueurs doivent obtenir 3 dés de même valeur et 2 dés de même valeur – (brelan + paire) / ils marquent 25 points.",
+      "serie": "Petite suite : les joueurs doivent obtenir 4 dés qui se suivent (1-2-3-4 / 2-3-4-5 / 3-4-5-6) / ils marquent 30 points.",
+      "bigserie": "Grande suite : les joueurs doivent obtenir 5 dés qui se suivent (1-2-3-4-5 / 2-3-4-5-6) / ils marquent 40 points.",
+      "yahtzee": "Yahtzee : les joueurs doivent obtenir 5 dés de même valeur / ils marquent 50 points.",
+      "chance": "Chance : les joueurs doivent obtenir le plus grand nombre de points / ils marquent la somme de tous les dès.",
+      "notice": "En fonction du total (bonus inclus) de la partie mineure et de la partie majeure, le vainqueur est désigné."
+   },
+   "home": {
+      "online": "Jouer en ligne",
+      "offline": "Jouer hors ligne",
+      "choose_players": "Entrer les joueurs",
+      "atleast": "minimum {number}",
+      "name_placeholder": "Nom du joueur {number}"
+   },
+   "play": {},
+   "errors": {}
+}

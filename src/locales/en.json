@@ -1,0 +1,20 @@
+{
+   "title": "Yahtzee",
+   "rules": {
+      "title": "Yahtzee game rules",
+      "upper": "Upper section",
+      "lower": "Lower section",
+      "ones": "Aces : les joueurs doivent obtenir le plus grand nombre de dés avec la face 1 / ils marquent 1 fois le nombre de dés de valeur 1.",
+      "twos": "Twos : les joueurs doivent obtenir le plus grand nombre de dés avec la face 2 / ils marquent 2 fois le nombre de dés de valeur 2.",
+      "threes": "Threes  : les joueurs doivent obtenir le plus grand nombre de dés avec la face 3 / ils marquent 1 fois le nombre de dés de valeur 3.",
+      "fours": "Fours : les joueurs doivent obtenir le plus grand nombre de dés avec la face 4 / ils marquent 4 fois le nombre de dés de valeur 4.",
+      "fives": "Fives : les joueurs doivent obtenir le plus grand nombre de dés avec la face 5 / ils marquent 5 fois le nombre de dés de valeur 5.",
+      "sixes": "Sixes : les joueurs doivent obtenir le plus grand nombre de dés avec la face 6 / ils marquent 6 fois le nombre de dés de valeur 6."
+   },
+   "home": {
+      "online": "Play online",
+      "offline": "Play offline"
+   },
+   "play": {},
+   "errors": {}
+}
