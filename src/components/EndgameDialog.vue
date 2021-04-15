@@ -10,11 +10,15 @@
             <v-row>
               <v-list flat>
                 <v-list-item
-                  v-for="p in $store.getters.playersRanking"
+                  v-for="(p, i) in $store.getters.playersRanking"
                   :key="p.id"
                 >
+
                   <v-list-item-icon>
-                    <v-icon>mdi-trophy</v-icon>
+                    <v-icon v-if="i < 3" :color="colors[i] || ''"
+                      >mdi-trophy</v-icon
+                    >
+                    <v-icon v-else>mdi-trophy-broken</v-icon>
                   </v-list-item-icon>
                   <v-list-item-content>
                     <v-list-item-title
@@ -39,8 +43,10 @@
 </template>
 
 <script>
-/* TODO: Sort by points */
 export default {
+  data: () => ({
+    colors: ['amber accent-3', 'blue-grey lighten-2', 'brown darken-2']
+  }),
   props: ['open'],
   methods: {
     quit () {
@@ -52,3 +58,18 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.color {
+  background-color: yellow;
+}
+
+.rank-2 {
+}
+
+.rank-3 {
+}
+
+.rank-other {
+}
+</style>

@@ -9,7 +9,6 @@
         <v-sheet rounded="lg"><PlayBoard /> </v-sheet>
       </v-col>
     </v-row>
-
     <EndgameDialog :open="$store.getters.gameIsOver" @close="abortGame" />
   </v-container>
 </template>

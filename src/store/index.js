@@ -112,7 +112,7 @@ export default new Vuex.Store({
       return Math.ceil(state.game.turn.number / state.players.length) == Defaults.MAX_TURN
     },
     playersRanking (state) {
-      return state.players.sort((a, b) => a.scores.totals.total - b.scores.totals.total)
+      return state.players.sort((a, b) => b.scores.totals.total - a.scores.totals.total)
     }
   }
 })
