@@ -15,24 +15,15 @@
     <br />
     <i>{{ $t("rules.lower") }}</i>
     <ul>
-      <li>{{ $t("rules.pair") }}
-      </li>
-      <li>{{ $t("rules.twopair") }}
-      </li>
-      <li>{{ $t("rules.three") }}
-      </li>
-      <li>{{ $t("rules.four") }}
-      </li>
-      <li>{{ $t("rules.full") }}
-      </li>
-      <li>{{ $t("rules.serie") }}
-      </li>
-      <li>{{ $t("rules.bigserie") }}
-      </li>
-      <li>{{ $t("rules.yahtzee") }}
-      </li>
-      <li>{{ $t("rules.chance") }}
-      </li>
+      <li>{{ $t("rules.pair") }}</li>
+      <li>{{ $t("rules.twopair") }}</li>
+      <li>{{ $t("rules.three") }}</li>
+      <li>{{ $t("rules.four") }}</li>
+      <li>{{ $t("rules.full") }}</li>
+      <li>{{ $t("rules.serie") }}</li>
+      <li>{{ $t("rules.bigserie") }}</li>
+      <li>{{ $t("rules.yahtzee") }}</li>
+      <li>{{ $t("rules.chance") }}</li>
     </ul>
     <br />
     {{ $t("rules.notice") }}

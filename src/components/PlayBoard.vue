@@ -3,17 +3,24 @@
     <v-card id="board" color="green darken-4" elevation="2" height="500" dark>
     </v-card>
     <v-card id="dices">
-      <v-card-title>Au tour de: {{ $store.getters.currentTurnPlayerName }}</v-card-title>
+      <v-card-title>
+        {{
+          $t("play.turn_of_player", {
+            name: $store.getters.currentTurnPlayerName,
+          })
+        }}</v-card-title
+      >
       <v-divider></v-divider>
       <div class="d-flex justify-space-around">
-        <Dice v-for="dice in dices" :key="dice.id" :id="dice.id" ref="dices"/>
+        <Dice v-for="dice in dices" :key="dice.id" :id="dice.id" ref="dices" />
       </div>
       <v-divider></v-divider>
 
       <v-btn block @click="roll" :disabled="!canRool">
-        <span v-if="$store.state.game.turn.leftRolls">Lancer ({{ $store.state.game.turn.leftRolls }} restants)</span>
-        <span v-else>Choisir</span>
-        
+        <span v-if="$store.state.game.turn.leftRolls">{{
+          $t("play.nb_left_rolls", { number: $store.state.game.turn.leftRolls })
+        }}</span>
+        <span v-else>{{ $t("play.choose") }}</span>
       </v-btn>
     </v-card>
   </div>

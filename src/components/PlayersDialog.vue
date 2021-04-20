@@ -3,13 +3,16 @@
     <v-dialog v-model="open" persistent max-width="600px">
       <v-card>
         <v-card-title dark>
-          <span class="headline">Entrer les joueurs <small>(minimum 1)</small></span>
+          <span class="headline"
+            >{{ $t("home.choose_players") }}
+            <small>({{ $t("home.atleast", { number: 1 }) }})</small></span
+          >
         </v-card-title>
         <v-card-text>
           <v-container>
             <v-row>
               <v-col cols="12">
-                <v-text-field 
+                <v-text-field
                   dense
                   label="Nom du joueur 1"
                   v-model="players[0]"
@@ -41,9 +44,9 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="red" text @click="$emit('close')"> Annuler </v-btn>
+          <v-btn color="red" text @click="$emit('close')"> {{ $t("play.cancel") }} </v-btn>
           <v-btn color="green darken-4" text @click="startGame" dark>
-            Commencer
+            {{ $t("play.start") }}
           </v-btn>
         </v-card-actions>
       </v-card>

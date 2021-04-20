@@ -11,9 +11,9 @@
           </v-btn>
         </template>
         <v-list>
-          <v-list-item v-for="l in languages" :key="l">
-            <v-list-item-title @click="switchLanguage(l)">
-              {{ l }}
+          <v-list-item v-for="l in languages" :key="l.key">
+            <v-list-item-title @click="switchLanguage(l.key)">
+              {{ l.value }}
             </v-list-item-title>
           </v-list-item>
         </v-list>
@@ -33,7 +33,10 @@
 export default {
   name: 'App',
   data: () => ({
-    languages: process.env.VUE_APP_I18N_SUPPORTED_LOCALE.split(',')
+    languages: [
+      { key: 'fr', value: 'Français'},
+      { key: 'en', value: 'English'},
+    ]
   }),
   methods: {
     switchLanguage (locale) {

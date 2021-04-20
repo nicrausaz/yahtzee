@@ -17,7 +17,7 @@
           >
         </v-list-item>
         <v-list-item>
-          <v-btn color="green darken-4" block dark>{{ $t("home.online") }}</v-btn>
+          <v-btn color="green darken-4" block disabled>{{ $t("home.online") }}</v-btn>
         </v-list-item>
       </v-list>
     </v-card>

@@ -1,14 +1,18 @@
 <template>
   <div class="scoretable" :key="$store.state.game.turn.number">
     <v-container>
-      <p class="text-right">Tour {{ $store.getters.currentTurn }} / 15</p>
+      <p class="text-right">
+        {{
+          $t("play.turn_nb", { current: $store.getters.currentTurn, max: 15 })
+        }}
+      </p>
     </v-container>
     <v-divider></v-divider>
     <v-simple-table dense>
       <template v-slot:default>
         <thead>
           <tr>
-            <th class="text-left">Partie supérieure</th>
+            <th class="text-left">{{ $t("rules.upper") }}</th>
             <th class="text-left" v-for="p in players" :key="p.id">
               {{ p.name }}
             </th>
@@ -52,19 +56,21 @@
             </th>
           </tr>
           <tr>
-            <td>Total</td>
+            <td>{{ $t("play.score_labels.total") }}</td>
             <th class="text-left" v-for="p in players" :key="p.id">
               {{ p.scores.totals.upper_total }}
             </th>
           </tr>
           <tr>
-            <td>Bonus</td>
+            <td>{{ $t("play.score_labels.bonus") }}</td>
             <th class="text-left" v-for="p in players" :key="p.id">
               {{ p.scores.totals.upper_bonus }}
             </th>
           </tr>
           <tr>
-            <td><small>Total supérieur</small></td>
+            <td>
+              <small>{{ $t("play.score_labels.upper_total") }}</small>
+            </td>
             <th class="text-left" v-for="p in players" :key="p.id">
               {{ p.scores.totals.upper_total + p.scores.totals.upper_bonus }}
             </th>
@@ -76,73 +82,77 @@
       <template v-slot:default>
         <thead>
           <tr>
-            <th class="text-left">Partie inférieure</th>
+            <th class="text-left">{{ $t("rules.lower") }}</th>
             <th class="text-left" v-for="p in players" :key="p.id"></th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>1 paire</td>
+            <td>{{ $t("play.score_labels.pair") }}</td>
             <th class="text-left" v-for="p in players" :key="p.id">
               <EditableScoreRow zone="lower" att="pair" :id="p.id" />
             </th>
           </tr>
           <tr>
-            <td>2 paire</td>
+            <td>{{ $t("play.score_labels.twopair") }}</td>
             <th class="text-left" v-for="p in players" :key="p.id">
               <EditableScoreRow zone="lower" att="twopair" :id="p.id" />
             </th>
           </tr>
           <tr>
-            <td>Brelan</td>
+            <td>{{ $t("play.score_labels.three") }}</td>
             <th class="text-left" v-for="p in players" :key="p.id">
               <EditableScoreRow zone="lower" att="three" :id="p.id" />
             </th>
           </tr>
           <tr>
-            <td>Carré</td>
+            <td>{{ $t("play.score_labels.four") }}</td>
             <th class="text-left" v-for="p in players" :key="p.id">
               <EditableScoreRow zone="lower" att="four" :id="p.id" />
             </th>
           </tr>
           <tr>
-            <td>Full</td>
+            <td>{{ $t("play.score_labels.full") }}</td>
             <th class="text-left" v-for="p in players" :key="p.id">
               <EditableScoreRow zone="lower" att="full" :id="p.id" />
             </th>
           </tr>
           <tr>
-            <td>Petite suite</td>
+            <td>{{ $t("play.score_labels.serie") }}</td>
             <th class="text-left" v-for="p in players" :key="p.id">
               <EditableScoreRow zone="lower" att="serie" :id="p.id" />
             </th>
           </tr>
           <tr>
-            <td>Grande suite</td>
+            <td>{{ $t("play.score_labels.bigserie") }}</td>
             <th class="text-left" v-for="p in players" :key="p.id">
               <EditableScoreRow zone="lower" att="bigserie" :id="p.id" />
             </th>
           </tr>
           <tr>
-            <td>Yahtzee</td>
+            <td>{{ $t("play.score_labels.yahtzee") }}</td>
             <th class="text-left" v-for="p in players" :key="p.id">
               <EditableScoreRow zone="lower" att="yahtzee" :id="p.id" />
             </th>
           </tr>
           <tr>
-            <td>Chance</td>
+            <td>{{ $t("play.score_labels.chance") }}</td>
             <th class="text-left" v-for="p in players" :key="p.id">
               <EditableScoreRow zone="lower" att="chance" :id="p.id" />
             </th>
           </tr>
           <tr>
-            <td><small>Total inférieur</small></td>
+            <td>
+              <small>{{ $t("play.score_labels.lower_total") }}</small>
+            </td>
             <th class="text-left" v-for="p in players" :key="p.id">
               {{ p.scores.totals.lower_total }}
             </th>
           </tr>
           <tr>
-            <td><b>Total final</b></td>
+            <td>
+              <b>{{ $t("play.score_labels.final_total") }}</b>
+            </td>
             <th class="text-left" v-for="p in players" :key="p.id">
               {{ p.scores.totals.total }}
             </th>
@@ -158,7 +168,6 @@ import EditableScoreRow from '@/components/EditableScoreRow.vue'
 
 export default {
   components: { EditableScoreRow },
-  data: () => ({ turn: 1 }),
   computed: {
     players () {
       return this.$store.state.players

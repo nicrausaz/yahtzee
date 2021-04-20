@@ -3,7 +3,7 @@
     <v-dialog v-model="open" persistent max-width="600px">
       <v-card>
         <v-card-title dark>
-          <span class="headline">Fin de la partie - Classement</span>
+          <span class="headline">{{ $t("play.endgame_ranking") }}</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -13,11 +13,8 @@
                   v-for="(p, i) in $store.getters.playersRanking"
                   :key="p.id"
                 >
-
                   <v-list-item-icon>
-                    <v-icon v-if="i < 3" :color="colors[i] || ''"
-                      >mdi-trophy</v-icon
-                    >
+                    <v-icon v-if="i < 3" :color="colors[i] || ''">mdi-trophy</v-icon>
                     <v-icon v-else>mdi-trophy-broken</v-icon>
                   </v-list-item-icon>
                   <v-list-item-content>
@@ -32,9 +29,9 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="red" text @click="quit"> Quitter </v-btn>
+          <v-btn color="red" text @click="quit"> {{ $t("play.quit") }} </v-btn>
           <v-btn color="green darken-4" text @click="replay" dark>
-            Rejouer
+            {{ $t("play.replay") }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -62,14 +59,5 @@ export default {
 <style scoped>
 .color {
   background-color: yellow;
-}
-
-.rank-2 {
-}
-
-.rank-3 {
-}
-
-.rank-other {
 }
 </style>
