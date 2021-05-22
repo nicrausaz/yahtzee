@@ -114,5 +114,5 @@ export default new Vuex.Store({
     playersRanking (state) {
       return state.players.sort((a, b) => b.scores.totals.total - a.scores.totals.total)
     }
-  }
+  },
 })

@@ -76,10 +76,6 @@
             </th>
           </tr>
         </tbody>
-      </template>
-    </v-simple-table>
-    <v-simple-table dense>
-      <template v-slot:default>
         <thead>
           <tr>
             <th class="text-left">{{ $t("rules.lower") }}</th>

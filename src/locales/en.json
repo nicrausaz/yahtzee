@@ -39,6 +39,7 @@
       "nb_left_rolls": "Roll ({number} left)",
       "turn_of_player": "{name}'s turn",
       "turn_nb": "Turn {current} / {max}",
+      "click_on_dice_instructions": "Click on a dice to keep it.",
       "score_labels": {
          "total": "Total",
          "bonus": "Bonus",

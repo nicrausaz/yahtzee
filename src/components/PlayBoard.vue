@@ -1,7 +1,5 @@
 <template>
   <div class="playboard">
-    <v-card id="board" color="green darken-4" elevation="2" height="500" dark>
-    </v-card>
     <v-card id="dices">
       <v-card-title>
         {{
@@ -10,10 +8,15 @@
           })
         }}</v-card-title
       >
+      <v-card-subtitle>{{ $t("play.click_on_dice_instructions") }}</v-card-subtitle>
       <v-divider></v-divider>
-      <div class="d-flex justify-space-around">
-        <Dice v-for="dice in dices" :key="dice.id" :id="dice.id" ref="dices" />
-      </div>
+      <v-card id="board" color="green darken-4" height="600" dark>
+        <Dice v-for="dice in freeDices" :key="dice.id" :id="dice.id" ref="freeDices" />
+      </v-card>
+      <v-divider></v-divider>
+      <v-card class="d-flex justify-space-around" height="100">
+        <Dice v-for="dice in lockedDices" :key="dice.id" :id="dice.id"  />
+      </v-card>
       <v-divider></v-divider>
 
       <v-btn block @click="roll" :disabled="!canRool">
@@ -33,16 +36,19 @@ export default {
   components: { Dice },
   methods: {
     roll () {
-      this.$refs.dices.forEach(d => d.animate())
+      this.$refs.freeDices.forEach(d => d.animate())
       this.$store.dispatch('rollDices')
     }
   },
   computed: {
-    dices () {
-      return this.$store.state.game.turn.dices
+    freeDices () {
+      return this.$store.state.game.turn.dices.filter(x => !x.locked)
+    },
+    lockedDices () {
+      return this.$store.state.game.turn.dices.filter(x => x.locked)
     },
     canRool () {
-      return this.$store.state.game.turn.leftRolls > 0
+      return this.$store.state.game.turn.leftRolls > 0 && this.freeDices.length > 0
     }
   }
 }

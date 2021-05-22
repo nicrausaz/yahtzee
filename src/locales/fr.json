@@ -39,6 +39,7 @@
       "nb_left_rolls": "Lancer ({number} restants)",
       "turn_of_player": "Au tour de {name}",
       "turn_nb": "Tour {current} / {max}",
+      "click_on_dice_instructions": "Cliquez sur un dé pour le conserver.",
       "score_labels": {
          "total": "Total",
          "bonus": "Bonus",
