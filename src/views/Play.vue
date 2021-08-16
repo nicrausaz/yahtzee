@@ -1,11 +1,12 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12" sm="5">
+      <v-col>
         <v-sheet rounded="lg"><ScoreCard /></v-sheet>
       </v-col>
-
-      <v-col cols="12" sm="7">
+    </v-row>
+    <v-row>
+      <v-col>
         <v-sheet rounded="lg"><PlayBoard /> </v-sheet>
       </v-col>
     </v-row>

@@ -10,12 +10,8 @@
       >
       <v-card-subtitle>{{ $t("play.click_on_dice_instructions") }}</v-card-subtitle>
       <v-divider></v-divider>
-      <v-card id="board" color="green darken-4" height="600" dark>
-        <Dice v-for="dice in freeDices" :key="dice.id" :id="dice.id" ref="freeDices" />
-      </v-card>
-      <v-divider></v-divider>
       <v-card class="d-flex justify-space-around" height="100">
-        <Dice v-for="dice in lockedDices" :key="dice.id" :id="dice.id"  />
+        <Dice v-for="dice in dices" :key="dice.id" :id="dice.id" ref="dices"/>
       </v-card>
       <v-divider></v-divider>
 
@@ -36,26 +32,17 @@ export default {
   components: { Dice },
   methods: {
     roll () {
-      this.$refs.freeDices.forEach(d => d.animate())
+      this.$refs.dices.forEach(d => d.animate())
       this.$store.dispatch('rollDices')
     }
   },
   computed: {
-    freeDices () {
-      return this.$store.state.game.turn.dices.filter(x => !x.locked)
-    },
-    lockedDices () {
-      return this.$store.state.game.turn.dices.filter(x => x.locked)
+    dices () {
+      return this.$store.state.game.turn.dices
     },
     canRool () {
-      return this.$store.state.game.turn.leftRolls > 0 && this.freeDices.length > 0
+      return this.$store.state.game.turn.leftRolls > 0
     }
   }
 }
 </script>
-
-<style scoped>
-#board {
-  border: 20px solid burlyWood !important;
-}
-</style>
