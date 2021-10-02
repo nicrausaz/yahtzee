@@ -7,7 +7,7 @@
     </v-row>
     <v-row>
       <v-col>
-        <v-sheet rounded="lg"><PlayBoard /> </v-sheet>
+        <v-sheet rounded="lg"><PlayBoard /></v-sheet>
       </v-col>
     </v-row>
     <EndgameDialog :open="$store.getters.gameIsOver" @close="abortGame" />
@@ -17,7 +17,7 @@
 <script>
 import ScoreCard from '@/components/ScoreCard.vue'
 import PlayBoard from '@/components/PlayBoard.vue'
-import EndgameDialog from '../components/EndgameDialog.vue'
+import EndgameDialog from '@/components/EndgameDialog.vue'
 
 export default {
   components: { ScoreCard, PlayBoard, EndgameDialog },

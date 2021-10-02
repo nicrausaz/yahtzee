@@ -17,7 +17,13 @@
           >
         </v-list-item>
         <v-list-item>
-          <v-btn color="green darken-4" block disabled>{{ $t("home.online") }}</v-btn>
+          <v-btn
+            color="green darken-4"
+            @click="openMultiplayerDialog = true"
+            block
+            dark
+            >{{ $t("home.online") }}</v-btn
+          >
         </v-list-item>
       </v-list>
     </v-card>
@@ -25,21 +31,28 @@
       :open="openPlayersDialog"
       @close="openPlayersDialog = false"
     />
+    <MultiplayerDialog
+      :open="openMultiplayerDialog"
+      @close="openMultiplayerDialog = false"
+    />
   </div>
 </template>
 
 <script>
 import RulesText from "@/components/RulesText.vue"
 import PlayersDialog from "@/components/PlayersDialog.vue"
+import MultiplayerDialog from "@/components/MultiplayerDialog.vue"
 
 export default {
   name: 'Home',
   data: () => ({
-    openPlayersDialog: false
+    openPlayersDialog: false,
+    openMultiplayerDialog: false
   }),
   components: {
     PlayersDialog,
-    RulesText
+    RulesText,
+    MultiplayerDialog
   }
 }
 </script>
