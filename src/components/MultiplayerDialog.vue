@@ -8,16 +8,10 @@
         <v-card-text>
           <v-list class="transparent">
             <v-list-item>
-              <v-btn
-                color="green darken-4"
-                @click="create"
-                block
-                dark
-              >
+              <v-btn color="green darken-4" @click="create" block dark>
                 Créer une partie
               </v-btn>
             </v-list-item>
-            
             <v-list-item>
               <v-text-field
                 color="green darken-4"
@@ -27,12 +21,7 @@
                 maxlength="6"
               >
                 <template v-slot:append>
-                  <v-btn
-                    dark
-                    tile
-                    color="green darken-4"
-                    @click="joinRoomId"
-                  >
+                  <v-btn dark tile color="green darken-4" @click="joinRoomId">
                     Rejoindre
                   </v-btn>
                 </template>
@@ -42,7 +31,9 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="red" text @click="quit"> {{ $t("play.cancel") }} </v-btn>
+          <v-btn color="red" text @click="quit">
+            {{ $t("play.cancel") }}
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -60,11 +51,12 @@ export default {
       this.$emit('close')
     },
     create () {
-       this.$router.push('/waitroom')
+      this.$router.push({ name: 'Waitroom' })
     },
     joinRoomId () {
-       console.log(this.roomId)
-       // TODO: request to API
+      if (this.roomId.length === 6) {
+        this.$router.push({ name: 'Join', params: { roomid: this.roomId } })
+      }
     }
   }
 }

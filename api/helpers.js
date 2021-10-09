@@ -1,5 +1,9 @@
-helpers = {
-   generateRoomName () { Math.random().toString(36).substring(5) }
-}
+export default {
+   generateRoomName () {
+      return Math.random().toString(36).substr(2, 8)
+   },
 
-export default helpers
+   getStringFromBuffer (buffer) {
+      return String.fromCharCode.apply(null, buffer)
+   }
+}
