@@ -2,9 +2,9 @@
   <v-card class="mx-auto" max-width="800">
     <v-img src="@/assets/dices.jpg" height="200px"></v-img>
     <v-card-text class="text--primary">
-      <h1>Créer une partie</h1>
+      <h1>Room ID: {{ roomId }}</h1>
+
       <v-list class="transparent">
-        <v-list-item> Jouer avec vos amis (max 4) </v-list-item>
         <v-list-item>
           <v-text-field
             label="Votre nom"
@@ -13,11 +13,7 @@
           ></v-text-field>
         </v-list-item>
         <v-list-item>
-          <h2>Room ID: {{ roomId }}</h2>
-          <p>send this to your friends</p>
-        </v-list-item>
-        <v-list-item>
-          <h2>Joueurs</h2>
+          <h2>Joueurs (max 4)</h2>
         </v-list-item>
         <v-list-item>
           <v-row>
@@ -34,8 +30,16 @@
     <v-list class="transparent">
       <v-list-item>
         <v-btn
+          :color="readyBtnColor"
+          @click="isReady = !isReady"
+          block
+          dark
+          >Prêt(e)</v-btn
+        >
+      </v-list-item>
+      <v-list-item v-if="isHost">
+        <v-btn
           color="green darken-4"
-          @click="openPlayersDialog = true"
           block
           :dark="canStartGame"
           :disabled="!canStartGame"
@@ -49,31 +53,35 @@
 <script>
 export default {
   data: () => ({
-    isHost: true,
-    playerName: 'Nicolas',
+    isReady: false,
+    playerName: '',
     roomId: "",
     players: []
   }),
-  props: [],
   methods: {
     startGame () {
 
     },
   },
   computed: {
-    canStartGame () { return this.playerName != '' && this.players.length > 0 }
+    canStartGame () { return this.playerName != '' && this.players.length > 0 },
+    readyBtnColor () { return this.isReady ? 'green darken-4' : 'red'},
+    isHost () { return this.$route.name === 'Waitroom' }
   },
 
   created () {
+    this.playerName = Math.random().toString(36).substr(2, 8) // Temporary random name
     const ws = new WebSocket('ws://localhost:3000')
 
     if (this.$route.params.roomid) {
       this.roomId = this.$route.params.roomid
-      ws.onopen = () => ws.send(`join ${this.roomId}`)
+      ws.onopen = () => ws.send(`join ${this.roomId} ${this.playerName}`)
     }
     else {
       ws.onopen = () => ws.send('create')
     }
+    
+    let state = this
 
     ws.onmessage = function (event) {
       const args = event.data.split(' ')
@@ -81,21 +89,25 @@ export default {
 
       switch (command) {
         case 'created':
-          this.roomId = args[1]
-          ws.send(`join ${this.roomId}`)
+          state.roomId = args[1]
+          ws.send(`join ${this.roomId} ${this.playerName}`)
           break;
 
         case 'joined':
 
-          console.log('Joined', args[1])
+          const data = JSON.parse(args[1])
+
+          state.roomId = data.id
+          state.players = data.players
+
           break;
 
         case 'ERROR':
-          console.err(event.data)
+          console.log(event.data)
           break;
 
         default:
-          console.err('Server sent an unexcepted message')
+          console.log('Server sent an unexcepted message')
           break;
       }
     }

@@ -17,7 +17,17 @@ wss.on('connection', function connection (ws) {
         const room = activeRooms.find(x => x.id === args[1])
 
         if (room) {
-          ws.send(`joined ${room.id}`)
+          // Register player
+          if (!room.isFull()) {
+            room.registerPlayer(args[2])
+          }
+          else {
+            ws.send('ERROR room is full')
+            return
+          }
+
+          // Join room and notify other players
+          ws.send(`joined ${JSON.stringify(room)}`)
         }
         else {
           ws.send('ERROR room not found')
@@ -33,7 +43,6 @@ wss.on('connection', function connection (ws) {
         ws.send(`created ${newRoom.id}`)
 
         console.log("Existing rooms:", activeRooms)
-
 
         break;
 

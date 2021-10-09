@@ -18,7 +18,7 @@
                 label="Room ID (ex. 235211)"
                 v-model="roomId"
                 @keypress.enter="test"
-                maxlength="6"
+                maxlength="8"
               >
                 <template v-slot:append>
                   <v-btn dark tile color="green darken-4" @click="joinRoomId">
@@ -54,7 +54,7 @@ export default {
       this.$router.push({ name: 'Waitroom' })
     },
     joinRoomId () {
-      if (this.roomId.length === 6) {
+      if (this.roomId.length === 8) {
         this.$router.push({ name: 'Join', params: { roomid: this.roomId } })
       }
     }

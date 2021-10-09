@@ -17,12 +17,12 @@ export default [
    {
       path: '/waitroom',
       name: 'Waitroom',
-      component: () => import(/* webpackChunkName: "about" */ '../views/WaitRoom.vue'),
+      component: () => import(/* webpackChunkName: "about" */ '../views/WaitRoom.vue')
    },
    {
       path: '/join/:roomid',
       name: 'Join',
-      component: () => import(/* webpackChunkName: "about" */ '../views/WaitRoom.vue'),
+      component: () => import(/* webpackChunkName: "about" */ '../views/WaitRoom.vue')
    },
    {
       path: "*",
