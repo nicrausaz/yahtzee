@@ -1,8 +1,7 @@
-import helpers from "../helpers"
-
 class Player {
-   constructor (name) {
-      this.id = helpers.generateRandomId()
+   constructor (uuid, socket, name) {
+      this.connUuid = uuid
+      this.socket = socket
       this.name = name
    }
 }

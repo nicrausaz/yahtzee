@@ -7,8 +7,8 @@ class Room {
       this.players = []
    }
 
-   registerPlayer (name) {
-      this.players.push(new Player(name))
+   registerPlayer (uuid, name) {
+      this.players.push(new Player(uuid, name))
    }
 
    isFull () {

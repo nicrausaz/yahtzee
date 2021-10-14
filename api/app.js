@@ -1,54 +1,68 @@
 import { WebSocketServer } from 'ws'
 import helpers from './helpers'
 import Room from './models/Room'
+import { v4 as uuidv4 } from 'uuid';
 
 const wss = new WebSocketServer({ port: 3000 })
 
 let activeRooms = []
 
-wss.on('connection', function connection (ws) {
-  ws.on('message', function (message) {
-    const args = helpers.getStringFromBuffer(message).split(' ')
+wss.on('connection', ws => {
+  // Connection ID
+  const connUUID = uuidv4()
 
-    switch (args[0]) {
+  ws.on('message', data => {
+
+    const [command, roomId, player] = helpers.getArgsFromBuffer(data)
+
+    switch (command) {
+      case 'create':
+        let newRoomID = helpers.generateRandomId()
+
+        activeRooms[newRoomID] = []
+
+        ws.send(`created ${newRoomID}`)
+        break
+
       case 'join':
 
-        // Check if exists
-        const room = activeRooms.find(x => x.id === args[1])
-
-        if (room) {
-          // Register player
-          if (!room.isFull()) {
-            room.registerPlayer(args[2])
-          }
-          else {
-            ws.send('ERROR room is full')
-            return
-          }
-
-          // Join room and notify other players
-          ws.send(`joined ${JSON.stringify(room)}`)
-        }
-        else {
+        if (!activeRooms[roomId]) {
           ws.send('ERROR room not found')
+          return;
         }
-        break;
 
-      case 'create':
+        activeRooms[roomId][connUUID] = {
+          player: {
+            name: player,
+            ready: false
+          },
+          socket: ws
+        }
 
-        // Create
-        let newRoom = new Room()
-        activeRooms.push(newRoom)
+        refreshClients(roomId)
+        break
 
-        ws.send(`created ${newRoom.id}`)
-
-        console.log("Existing rooms:", activeRooms)
-
-        break;
-
-      default:
-        ws.send('ERROR invalid command')
+      case 'ready':
+        console.log(activeRooms[roomId][connUUID].player)
+        if (activeRooms[roomId]) {
+          activeRooms[roomId][connUUID].player.ready = !activeRooms[roomId][connUUID].player.ready
+          refreshClients(roomId)
+        }
         break;
     }
+
+    //ws.onclose(() => delete)
   })
 })
+
+const refreshClients = (roomId) => {
+  const players = JSON.stringify(Object.values(activeRooms[roomId]).map(x => x.player))
+
+  Object.values(activeRooms[roomId]).forEach(player => {
+    player.socket.send(`refresh ${players}`)
+  })
+}
+
+const validateRoom = (roomId) => {
+  // TODO
+}
