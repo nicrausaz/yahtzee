@@ -5,5 +5,9 @@ export default {
 
    getArgsFromBuffer (buffer) {
       return String.fromCharCode.apply(null, buffer).split(' ')
+   },
+
+   generateAbrev (name) {
+      return name.substr(0, 2).toUpperCase()
    }
 }

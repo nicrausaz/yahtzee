@@ -10,7 +10,14 @@
             label="Votre nom"
             v-model="playerName"
             required
-          ></v-text-field>
+            @keyup.enter="updateName"
+          >
+            <template v-slot:append>
+              <v-btn dark tile color="green darken-4" @click="updateName">
+                Apply
+              </v-btn>
+            </template>
+          </v-text-field>
         </v-list-item>
         <v-list-item>
           <h2>Joueurs (max 4)</h2>
@@ -18,14 +25,10 @@
         <v-list-item>
           <v-row>
             <v-col v-for="p in players" :key="p.abrev">
-              <v-avatar color="red">
-                <span class="white--text text-h5">NC</span>
+              <v-avatar :color="p.ready ? `green` : `red`">
+                <span class="white--text text-h5">{{ p.abrev }}</span>
               </v-avatar>
-              {{ p.name }} {{ p.ready }}
-              <v-icon v-if="p.ready" color="green darken-2"
-                >account-check</v-icon
-              >
-              <v-icon v-else color="red darken-2">close-thick</v-icon>
+              {{ p.name }}
             </v-col>
           </v-row>
         </v-list-item>
@@ -54,7 +57,7 @@
 export default {
   data: () => ({
     isReady: false,
-    playerName: '',
+    playerName: 'Didier',
     roomId: "",
     players: [],
     socket: null,
@@ -62,7 +65,11 @@ export default {
   }),
   methods: {
     toggleReady () {
+      this.isReady = !this.isReady
       this.socket.send(`ready ${this.roomId}`)
+    },
+    updateName () {
+      this.socket.send(`newname ${this.roomId} ${this.playerName}`)
     },
     startGame () {
 
@@ -70,12 +77,11 @@ export default {
   },
   computed: {
     canStartGame () { return this.playerName != '' && this.players.every(p => p.ready === true) },
-    readyBtnColor () { return false ? 'green darken-4' : 'red' /* TODO: refactor this */ },
+    readyBtnColor () { return this.isReady ? 'green darken-4' : 'red' },
     isHost () { return this.$route.name === 'Waitroom' },
   },
 
   created () {
-    this.playerName = 'Nicolas' // Temporary random name
     this.socket = new WebSocket('ws://localhost:3000')
 
     if (this.$route.params.roomid) {
@@ -91,6 +97,8 @@ export default {
     this.socket.onmessage = function (event) {
       const [command, arg] = event.data.split(' ')
       state.socketConnected = true
+      
+console.log(command, arg)
 
       switch (command) {
         case 'created':
