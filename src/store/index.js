@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Scorer from './Scorer'
 import Defaults from './Defaults.js'
+import WaitRoomModule from './Waitroom'
 
 Vue.use(Vuex)
 
@@ -115,4 +116,8 @@ export default new Vuex.Store({
       return state.players.sort((a, b) => b.scores.totals.total - a.scores.totals.total)
     }
   },
+
+  modules: {
+    waitroom: WaitRoomModule
+  }
 })

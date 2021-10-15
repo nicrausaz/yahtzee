@@ -48,13 +48,18 @@ wss.on('connection', ws => {
         }
         break
       case 'pong':
-        confirmPing()
+        clearTimeout(timeOut)
         break
     }
 
-    if (init) {
+    if (init && roomId) {
       init = false
-      setInterval(() => ping(ws, roomId), 3000)
+      setInterval(() => {
+        if (isRoomValid(roomId)) {
+          ping(ws, roomId)
+          refreshClients(roomId)
+        }
+      }, 3000)
     }
   })
 })
@@ -71,14 +76,14 @@ const isRoomValid = (roomId) => {
   return activeRooms[roomId]
 }
 
-function confirmPing () {
-  clearTimeout(timeOut)
-}
-
 function ping (ws, roomId) {
   ws.send('ping')
+
   timeOut = setTimeout(() => {
     activeRooms[roomId] = Object.values(activeRooms[roomId]).filter(p => p.getSocket() !== ws)
-    refreshClients(roomId)
+
+    if (!Object.values(activeRooms[roomId]).length) {
+      delete activeRooms[roomId]
+    }
   }, 3000)
 }

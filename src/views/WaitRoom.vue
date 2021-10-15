@@ -2,7 +2,8 @@
   <v-card class="mx-auto" max-width="800">
     <v-img src="@/assets/dices.jpg" height="200px"></v-img>
     <v-card-text class="text--primary">
-      <h1>Room ID: {{ roomId }}</h1>
+      
+      <h1>Room ID: {{ $store.state.waitroom.roomId }}</h1>
       <v-list class="transparent">
         <v-list-item>
           <v-text-field
@@ -23,7 +24,7 @@
         </v-list-item>
         <v-list-item>
           <v-row>
-            <v-col v-for="p in players" :key="p.abrev">
+            <v-col v-for="p in $store.state.waitroom.connectedPlayers" :key="p.abrev">
               <v-avatar :color="p.ready ? `green` : `red`">
                 <span class="white--text text-h5">{{ p.abrev }}</span>
               </v-avatar>
@@ -34,12 +35,12 @@
       </v-list>
     </v-card-text>
     <v-list class="transparent">
-      <v-list-item v-if="socketConnected">
+      <v-list-item v-if="$store.state.waitroom.socketConnected">
         <v-btn :color="readyBtnColor" @click="toggleReady" block dark
           >Prêt(e)</v-btn
         >
       </v-list-item>
-      <v-list-item v-if="isHost">
+      <v-list-item v-if="$store.state.waitroom.isHost">
         <v-btn
           color="green darken-4"
           block
@@ -57,19 +58,14 @@
 export default {
   data: () => ({
     isReady: false,
-    playerName: 'Didier',
-    roomId: "",
-    players: [],
-    socket: null,
-    socketConnected: false
   }),
   methods: {
     toggleReady () {
       this.isReady = !this.isReady
-      this.socket.send(`ready ${this.roomId}`)
+      this.$store.state.waitroom.socket.send(`ready ${this.$store.state.waitroom.roomId}`)
     },
     updateName () {
-      this.socket.send(`newname ${this.roomId} ${this.playerName}`)
+      this.$store.state.waitroom.socket.send(`newname ${this.$store.state.waitroom.roomId} ${this.$store.state.waitroom.playerName}`)
     },
     async startGame () {
       await this.$store.dispatch('initGame', this.players)
@@ -77,52 +73,23 @@ export default {
     },
   },
   computed: {
-    canStartGame () { return this.playerName != '' && this.players.every(p => p.ready === true) },
+    canStartGame () { return this.$store.getters['waitroom/allPlayersReady'] },
     readyBtnColor () { return this.isReady ? 'green darken-4' : 'red' },
-    isHost () { return this.$route.name === 'Waitroom' },
+    
+    playerName: {
+      get () {
+        return this.$store.state.waitroom.playerName
+      },
+      set (value) {
+        this.$store.commit('waitroom/setPlayerName', value)
+      }
+    }
   },
 
   created () {
-    this.socket = new WebSocket('ws://localhost:3000')
-
-    if (this.$route.params.roomid) {
-      this.roomId = this.$route.params.roomid
-      this.socket.onopen = () => this.socket.send(`join ${this.roomId} ${this.playerName}`)
-    }
-    else {
-      this.socket.onopen = () => this.socket.send('create')
-    }
-
-    let state = this
-
-    this.socket.onmessage = function (event) {
-      const [command, arg] = event.data.split(' ')
-      state.socketConnected = true
-
-      switch (command) {
-        case 'created':
-          state.roomId = arg
-          state.socket.send(`join ${state.roomId} ${state.playerName}`)
-          break
-
-        case 'joined':
-        case 'refresh':
-          state.players = JSON.parse(arg)
-          break
-
-        case 'ERROR':
-          console.log(event.data)
-          break
-
-        case 'ping':
-          state.socket.send('pong')
-          break
-
-        default:
-          console.log('Server sent an unexcepted message')
-          break
-      }
-    }
+    this.$store.dispatch('waitroom/initSocket')
+    this.$store.dispatch('waitroom/setRoomId', this.$route.params.roomid)
+    this.$store.dispatch('waitroom/joinOrCreateRoom')
   }
 }
 </script>
