@@ -27,7 +27,13 @@
       "offline": "Play offline",
       "choose_players": "Enter players",
       "atleast": "at least {number}",
-      "name_placeholder": "Player {number} name"
+      "name_placeholder": "Player {number} name",
+      "room_id": "Game number: {number}",
+      "edit": "Modify",
+      "players": "Players",
+      "ready": "Ready",
+      "start": "Start game",
+      "yourname": "Your name"
    },
    "play": {
       "endgame_ranking": "Game over - Ranking",

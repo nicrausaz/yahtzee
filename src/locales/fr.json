@@ -27,7 +27,13 @@
       "offline": "Jouer hors ligne",
       "choose_players": "Entrer les joueurs",
       "atleast": "minimum {number}",
-      "name_placeholder": "Nom du joueur {number}"
+      "name_placeholder": "Nom du joueur {number}",
+      "room_id": "Numéro de la partie: {number}",
+      "edit": "Modifier",
+      "players": "Joueurs",
+      "ready": "Prêt(e)",
+      "start": "Démarrer la partie",
+      "yourname": "Votre nom"
    },
    "play": {
       "endgame_ranking": "Fin de la partie - Classement",

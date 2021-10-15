@@ -11,8 +11,10 @@
         <v-card-text>
           <v-container>
             <v-row>
+              <!-- todo: refactor this -->
               <v-col cols="12">
                 <v-text-field
+                  color="green darken-4"
                   dense
                   label="Nom du joueur 1"
                   v-model="players[0]"
@@ -20,6 +22,7 @@
               </v-col>
               <v-col cols="12">
                 <v-text-field
+                  color="green darken-4"
                   dense
                   label="Nom du joueur 2"
                   v-model="players[1]"
@@ -27,6 +30,7 @@
               </v-col>
               <v-col cols="12">
                 <v-text-field
+                  color="green darken-4"
                   dense
                   label="Nom du joueur 3"
                   v-model="players[2]"
@@ -34,6 +38,7 @@
               </v-col>
               <v-col cols="12">
                 <v-text-field
+                  color="green darken-4"
                   dense
                   label="Nom du joueur 4"
                   v-model="players[3]"
@@ -44,7 +49,9 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="red" text @click="$emit('close')"> {{ $t("play.cancel") }} </v-btn>
+          <v-btn color="red" text @click="$emit('close')">
+            {{ $t("play.cancel") }}
+          </v-btn>
           <v-btn color="green darken-4" text @click="startGame" dark>
             {{ $t("play.start") }}
           </v-btn>

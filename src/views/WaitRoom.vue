@@ -3,24 +3,25 @@
     <v-img src="@/assets/dices.jpg" height="200px"></v-img>
     <v-card-text class="text--primary">
       
-      <h1>Room ID: {{ $store.state.waitroom.roomId }}</h1>
+      <h1>{{ $t("home.room_id", {number: $store.state.waitroom.roomId}) }}</h1>
       <v-list class="transparent">
         <v-list-item>
           <v-text-field
-            label="Votre nom"
+            :label="$t('home.yourname')"
+            color="green darken-4"
             v-model="playerName"
             required
             @keyup.enter="updateName"
           >
             <template v-slot:append>
               <v-btn dark tile color="green darken-4" @click="updateName">
-                Apply
+                {{ $t("home.edit") }}
               </v-btn>
             </template>
           </v-text-field>
         </v-list-item>
         <v-list-item>
-          <h2>Joueurs (max 4)</h2>
+          <h2>{{ $t("home.players") }}</h2>
         </v-list-item>
         <v-list-item>
           <v-row>
@@ -37,7 +38,7 @@
     <v-list class="transparent">
       <v-list-item v-if="$store.state.waitroom.socketConnected">
         <v-btn :color="readyBtnColor" @click="toggleReady" block dark
-          >Prêt(e)</v-btn
+          >{{ $t("home.ready") }}</v-btn
         >
       </v-list-item>
       <v-list-item v-if="$store.state.waitroom.isHost">
@@ -47,7 +48,7 @@
           @click="startGame"
           :dark="canStartGame"
           :disabled="!canStartGame"
-          >Lancer la partie</v-btn
+          >{{ $t("home.start") }}</v-btn
         >
       </v-list-item>
     </v-list>

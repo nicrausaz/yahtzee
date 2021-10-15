@@ -37,7 +37,6 @@ const WaitRoomModule = {
       allPlayersReady: (state) => {
          return state.connectedPlayers.every(p => p.ready === true)
       }
-
    },
 
    actions: {
@@ -60,7 +59,7 @@ const WaitRoomModule = {
       },
       toggleReady (context, ready) {
          context.commit('setReady', ready)
-      },
+      }
    }
 }
 
