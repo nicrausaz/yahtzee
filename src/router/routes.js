@@ -10,7 +10,7 @@ export default [
       component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
    },
    {
-      path: '/play/:type',
+      path: '/play/:type/:roomId?',
       name: 'Play',
       component: () => import(/* webpackChunkName: "about" */ '../views/Play.vue')
    },

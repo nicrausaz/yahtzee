@@ -3,7 +3,6 @@
     <v-img src="@/assets/dices.jpg" height="200px"></v-img>
     <v-card-text class="text--primary">
       <h1>Room ID: {{ roomId }}</h1>
-
       <v-list class="transparent">
         <v-list-item>
           <v-text-field
@@ -44,6 +43,7 @@
         <v-btn
           color="green darken-4"
           block
+          @click="startGame"
           :dark="canStartGame"
           :disabled="!canStartGame"
           >Lancer la partie</v-btn
@@ -71,8 +71,9 @@ export default {
     updateName () {
       this.socket.send(`newname ${this.roomId} ${this.playerName}`)
     },
-    startGame () {
-
+    async startGame () {
+      await this.$store.dispatch('initGame', this.players)
+      this.$router.push('/play/online/' + this.roomId)
     },
   },
   computed: {
@@ -97,8 +98,6 @@ export default {
     this.socket.onmessage = function (event) {
       const [command, arg] = event.data.split(' ')
       state.socketConnected = true
-      
-console.log(command, arg)
 
       switch (command) {
         case 'created':
@@ -113,6 +112,10 @@ console.log(command, arg)
 
         case 'ERROR':
           console.log(event.data)
+          break
+
+        case 'ping':
+          state.socket.send('pong')
           break
 
         default:

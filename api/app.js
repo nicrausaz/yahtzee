@@ -6,10 +6,12 @@ import { v4 as uuidv4 } from 'uuid';
 const wss = new WebSocketServer({ port: 3000 })
 
 let activeRooms = []
+let timeOut
 
 wss.on('connection', ws => {
   // Connection ID
   const connUUID = uuidv4()
+  let init = true
 
   ws.on('message', data => {
 
@@ -45,16 +47,20 @@ wss.on('connection', ws => {
           refreshClients(roomId)
         }
         break
+      case 'pong':
+        confirmPing()
+        break
     }
 
-    //ws.onclose(() => delete)
+    if (init) {
+      init = false
+      setInterval(() => ping(ws, roomId), 3000)
+    }
   })
 })
 
 const refreshClients = (roomId) => {
   const players = JSON.stringify(Object.values(activeRooms[roomId]).map(x => x.getClientData()))
-
-  console.log(players)
 
   Object.values(activeRooms[roomId]).forEach(player => {
     player.socket.send(`refresh ${players}`)
@@ -63,4 +69,16 @@ const refreshClients = (roomId) => {
 
 const isRoomValid = (roomId) => {
   return activeRooms[roomId]
+}
+
+function confirmPing () {
+  clearTimeout(timeOut)
+}
+
+function ping (ws, roomId) {
+  ws.send('ping')
+  timeOut = setTimeout(() => {
+    activeRooms[roomId] = Object.values(activeRooms[roomId]).filter(p => p.getSocket() !== ws)
+    refreshClients(roomId)
+  }, 3000)
 }
